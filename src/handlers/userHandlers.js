@@ -3,19 +3,18 @@ require("dotenv").config()
 exports.register = async (req, res, next) => {
 
     const { username, email, password } = req.body
-    const role = 'free'
 
     const { User } = req.db
     const found = await User.findOne({ email })
     if (found) {
-        const err = new Error(`user ${name} already exist`)
+        const err = new Error(`user already exist`)
         err.code = 409
         return next(err)
     }
     const bcrypt = req.bcrypt
     const hashed = await bcrypt.hash(password, Number(process.env.SALT_OR_ROUNDS))
 
-    let newUser = new User({ name, password: hashed, gender, role })
+    let newUser = new User({ username, password: hashed, role: 'free' })
 
     newUser = await newUser.save()
     res.status(201).json({
