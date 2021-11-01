@@ -1,7 +1,7 @@
 openapi: 3.0.2
 
 info: 
-  title: Mina Curhat App API
+  title: Fashliy API
   version: 1.0.0
   contact:
     name: Velezer
@@ -9,10 +9,10 @@ info:
 
 externalDocs:
   description: Repository Link
-  url: https://github.com/Velezer/mina-curhat-app-api
+  url: https://github.com/Velezer/fashliy
 
 servers:
-  - url: https://mina-curhat-api.herokuapp.com/
+  - url: https://fashliy.herokuapp.com/
 
 
 components:
@@ -21,16 +21,7 @@ components:
       type: http
       scheme: 'Bearer'
   schemas:
-    anonymInput:
-      type: object
-      properties:
-        name:
-          type: string
-        gender:
-          type: string
-          enum:
-            - male
-            - female
+
     loginSuccess:
       type: object
       properties:
@@ -41,51 +32,7 @@ components:
           properties:
             token:
               type: string
-    getAllConsultants:
-      type: object
-      properties:
-        message:
-          type: string
-        data:
-          type: array
-          items:
-            type: object
-            properties:
-              _id:
-                type: string
-              name:
-                type: string
-              role:
-                type: string
-              gender:
-                type: string
-              __v:
-                type: string
-    consultantRegister:
-      type: object
-      properties:
-        name:
-          type: string
-        password:
-          type: string
-        role:
-          type: string
-          enum:
-            - consultant
-            - ustadz
-        gender:
-          type: string
-          enum:
-            - male
-            - female
-    consultantLogin:
-      type: object
-      properties:
-        name:
-          type: string
-        password:
-          type: string
-      
+
 
     basicMessage:
       type: object
@@ -107,44 +54,6 @@ components:
                 type: string
               location:
                 type: string
-
-    getChatrooms:
-      type: object
-      properties:
-        message:
-          type: string
-        data:
-          type: array
-          items: 
-            type: object
-            properties:
-              consultant:
-                type: string
-              anonym:
-                type: string
-              chatroom_token:
-                type: string
-    getChatroomById:
-      type: object
-      properties:
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            consultant:
-              type: string
-            anonym:
-              type: string
-            chatroom_token:
-              type: string
-    createChatroom:
-      type: object
-      properties:
-        consultant:
-          type: string
-        chatroom_token:
-          type: string
         
 
 paths:
@@ -159,47 +68,6 @@ paths:
           description: OK
 
 
-  /api/anonym/login:
-    post:
-      summary: User login as an anonymous
-      tags:
-        - anonym
-      requestBody:
-        required: true
-        description: anonym data
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/anonymInput'
-            examples:
-              male: 
-                value:
-                  name: male name
-                  gender: male
-              female: 
-                value:
-                  name: female name
-                  gender: female
-      responses:
-        200:
-          description: Anonym login success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/loginSuccess'
-        409:
-          description: Conflict, anonym name has taken
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/basicMessage'
-        400:
-          description: Validation failed
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/validationError'
-  
   /api/consultants:
     get:
       summary: get all consultants
@@ -308,98 +176,3 @@ paths:
               schema:
                 $ref: '#/components/schemas/validationError'
 
-
-  /api/chatrooms:
-    post:
-      security:
-        - jwt_token: []
-      tags:
-        - chatroom
-      summary: create chatroom
-      description: only anonym can create chatroom
-      requestBody:
-        required: true
-        description: chatroom data
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/createChatroom'
-            example:
-              consultant: 61788394ff9dbd1ffffad737
-              chatroom_token: rtoken
-            
-      responses:
-        201:
-          description: created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/getChatrooms'
-        401:
-          description: unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/basicMessage'
-    get:
-      security:
-        - jwt_token: []
-      tags:
-        - chatroom
-      summary: get chatrooms
-      description: it depends on your role in jwt token
-      responses:
-        200:
-          description: get chatroom success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/getChatrooms'
-        401:
-          description: unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/basicMessage'
-  /api/chatrooms/{_id}:
-    get:
-      security:
-        - jwt_token: []
-      tags:
-        - chatroom
-      summary: get chatrooms by id
-      description: it depends on your role in jwt token
-      parameters:
-        - name: _id
-          in: path
-          required: true
-          schema:
-            type: string
-
-      responses:
-        200:
-          description: get chatroom success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/getChatroomById'
-        401:
-          description: unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/basicMessage'
-        404:
-          description: not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/basicMessage'
-        500:
-          description: server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/basicMessage'
-  
-    

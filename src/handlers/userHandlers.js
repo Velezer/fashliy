@@ -22,6 +22,28 @@ exports.register = async (req, res, next) => {
     })
 }
 
+exports.createAdmin = async (req, res, next) => {
+
+    const { username, email, password } = req.body
+
+    const { User } = req.db
+    const found = await User.findOne({ email })
+    if (found) {
+        const err = new Error(`user already exist`)
+        err.code = 409
+        return next(err)
+    }
+    const bcrypt = req.bcrypt
+    const hashed = await bcrypt.hash(password, Number(process.env.SALT_OR_ROUNDS))
+
+    let newUser = new User({ username, password: hashed, role: 'admin' })
+
+    newUser = await newUser.save()
+    res.status(201).json({
+        message: `User ${newUser.name} created`
+    })
+}
+
 exports.login = async (req, res, next) => {
     const { email, password } = req.body
 
@@ -53,16 +75,26 @@ exports.login = async (req, res, next) => {
     })
 }
 
-// exports.getConsultants = async (req, res) => {
+// admin only
+exports.getUsers = async (req, res) => {
+    const { _id } = req.payload
 
-//     const { Consultant } = req.db
-//     const consultants = await Consultant.find({})
+    const { User } = req.db
 
-//     res.status(200).json({
-//         message: `get all consultants`,
-//         data: consultants
-//     })
-// }
+    const admin = await User.findOne({ _id })
+    if (admin.role !== `admin`) {
+        const err = new Error(`you are not an admin`)
+        err.code = 401
+        return next(err)
+    }
+
+    const founds = await User.find({})
+
+    res.status(200).json({
+        message: `get all users`,
+        data: founds
+    })
+}
 
 exports.deleteUser = async (req, res, next) => {
     const { _id } = req.payload
@@ -78,6 +110,24 @@ exports.deleteUser = async (req, res, next) => {
 
     res.status(200).json({
         message: `user deleted`,
+    })
+}
+
+exports.upgradeToPremium = async (req, res, next) => {
+    const { _id } = req.payload
+
+    const { User } = req.db
+    const found = await User.findOne({ _id })
+    if (!found) {
+        const err = new Error(`user not found`)
+        err.code = 404
+        return next(err)
+    }
+    await User.updateOne({ _id }, {
+        $set: { role: `premium` }
+    })
+    res.status(200).json({
+        message: `user upgraded to premium`,
     })
 }
 

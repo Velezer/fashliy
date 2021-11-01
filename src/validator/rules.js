@@ -10,33 +10,14 @@ const validate = (req, res, next) => {
     next()
 }
 
-exports.consultant = [
-    body(`name`, `name is empty`).notEmpty(),
-    body(`password`, `password is empty`).notEmpty(),
-    body(`gender`, `gender must be male or female`)
-        .notEmpty().bail()
-        .isIn(['male', 'female']).bail(),
-    body(`role`, `role must be consultant or ustadz`)
-        .notEmpty().bail()
-        .isIn(['consultant', 'ustadz']).bail(),
-    validate
-]
-exports.loginConsultant = [
-    body(`name`, `name is empty`).notEmpty(),
+exports.regUser = [
+    body(`username`, `username is empty`).notEmpty(),
+    body(`email`, `enter valid email`).isEmail(),
     body(`password`, `password is empty`).notEmpty(),
     validate
 ]
-
-exports.anonym = [
-    body(`name`, `name is empty`).notEmpty(),
-    body(`gender`, `gender must be male or female`)
-        .notEmpty().bail()
-        .isIn(['male', 'female']).bail(),
-    validate
-]
-
-exports.chatroom = [
-    body(`consultant`, `consultant is empty`).notEmpty(),
-    body(`chatroom_token`, `chatroom_token is empty`).notEmpty(),
+exports.loginUser = [
+    body(`email`, `enter valid email`).isEmail(),
+    body(`password`, `password is empty`).notEmpty(),
     validate
 ]
