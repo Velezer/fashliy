@@ -12,8 +12,8 @@ function dbClose() {
     return mongoose.disconnect()
 }
 
-const Chatroom = require("./models/Chatroom")
-const Consultant = require("./models/Consultant")
-const Message = require("./models/Message")
-const Anonym = require("./models/Anonym")
-module.exports = { dbConnect, dbClose, Chatroom, Consultant, Message, Anonym }
+const Lesson = require("./models/Lesson")
+const Score = require("./models/Score")
+const Todo = require("./models/Todo")
+const User = require("./models/User")
+module.exports = { dbConnect, dbClose, Lesson, Score, Todo, User }

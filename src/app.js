@@ -26,7 +26,7 @@ module.exports = (db, bcrypt, jwt) => {
     })
   })
 
-  app.use('/api/consultants', require("./routes/consultant"))
+  app.use('/api/consultants', require("./routes/user"))
   app.use('/api/chatrooms', require("./routes/chatrooms"))
   app.use('/api/anonym', require("./routes/anonym"))
   
