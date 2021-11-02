@@ -68,12 +68,14 @@ paths:
           description: OK
 
 
-  /api/consultants:
+  /api/users:
     get:
       summary: get all consultants
       description: get all consultants
       tags:
-        - consultants
+        - users
+      security:
+        - jwt_token: []
       responses:
         200:
           description: OK

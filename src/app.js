@@ -27,8 +27,6 @@ module.exports = (db, bcrypt, jwt) => {
   })
 
   app.use('/api/users', require("./routes/users"))
-  app.use('/api/chatrooms', require("./routes/chatrooms"))
-  app.use('/api/anonym', require("./routes/anonym"))
   
   app.use('/api/docs', require("./routes/docs"))
   

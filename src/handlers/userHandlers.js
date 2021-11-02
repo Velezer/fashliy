@@ -123,6 +123,13 @@ exports.upgradeToPremium = async (req, res, next) => {
         err.code = 404
         return next(err)
     }
+    
+    if (found.role !== `free`) {
+        const err = new Error(`this is not free account`)
+        err.code = 400
+        return next(err)
+    }
+
     await User.updateOne({ _id }, {
         $set: { role: `premium` }
     })
