@@ -13,6 +13,6 @@ router.delete('/', auth, userHandlers.deleteUser)
 
 // admin only
 router.get('/', auth, userHandlers.getUsers)
-router.post('/admin', auth, userHandlers.createAdmin)
+router.post('/admin', userHandlers.createAdmin)
 
 module.exports = router

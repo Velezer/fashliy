@@ -92,16 +92,12 @@ paths:
       summary: delete user
       description: delete based on jwt_token
       tags:
-        - consultants
+        - users
       security:
         - jwt_token: []
       responses:
         200:
           description: deleted
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/basicMessage"
 
   /api/users/login:
     post:
@@ -115,13 +111,26 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/userLogin"
-            example:
-              name: name
-              password: password
 
       responses:
         200:
           description: login success
+
+  /api/users/admin:
+    post:
+      tags:
+        - users
+      security:
+        - jwt_token: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/userRegister"
+      responses:
+        200:
+          description: upgraded to premium
 
   /api/users/register:
     post:
@@ -129,33 +138,23 @@ paths:
         - users
       requestBody:
         required: true
-        description: consultant data
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/userRegister"
-            example:
-              name: name
-              password: password
-              role: consultant
-              gender: male
 
       responses:
         201:
-          description: consultant created
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/basicMessage"
-        409:
-          description: consultant already exist
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/basicMessage"
-        400:
-          description: Validation failed
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/validationError"
+          description: created
+
+  /api/users/upgrade:
+    post:
+      tags:
+        - users
+      security:
+        - jwt_token: []
+      responses:
+        200:
+          description: upgraded to premium
+  
+
