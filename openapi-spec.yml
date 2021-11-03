@@ -149,7 +149,7 @@ paths:
         201:
           description: created
 
-  /api/users/upgrade:
+  /api/users/upgradePro:
     post:
       tags:
         - users
@@ -157,6 +157,16 @@ paths:
         - jwt_token: []
       responses:
         200:
-          description: upgraded to premium
+          description: upgraded to premiumPro
+          
+  /api/users/upgradeExpert:
+    post:
+      tags:
+        - users
+      security:
+        - jwt_token: []
+      responses:
+        200:
+          description: upgraded to premiumExpert
   
 

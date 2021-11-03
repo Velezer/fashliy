@@ -21,7 +21,7 @@ const User = mongoose.model('User', new Schema(
         },
         role: {
             type: String,
-            enum: ['admin', 'free', 'premium'],
+            enum: ['admin', 'free', 'premiumPro', 'premiumExpert'],
             default: 'free',
             required: [true, 'role is required'],
         },

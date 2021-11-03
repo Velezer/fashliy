@@ -7,7 +7,8 @@ const auth = require("../middleware/auth-express")
 router.post('/register', rules.regUser, userHandlers.register)
 router.post('/login', rules.loginUser, userHandlers.login)
 
-router.post('/upgrade', auth, userHandlers.upgradeToPremium)
+router.post('/upgradePro', auth, userHandlers.upgradeToPremiumPro)
+router.post('/upgradeExpert', auth, userHandlers.upgradeToPremiumExpert)
 
 router.delete('/', auth, userHandlers.deleteUser)
 

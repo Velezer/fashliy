@@ -113,7 +113,7 @@ exports.deleteUser = async (req, res, next) => {
     })
 }
 
-exports.upgradeToPremium = async (req, res, next) => {
+exports.upgradeToPremiumPro = async (req, res, next) => {
     const { _id } = req.payload
 
     const { User } = req.db
@@ -123,7 +123,7 @@ exports.upgradeToPremium = async (req, res, next) => {
         err.code = 404
         return next(err)
     }
-    
+
     if (found.role !== `free`) {
         const err = new Error(`this is not free account`)
         err.code = 400
@@ -131,10 +131,34 @@ exports.upgradeToPremium = async (req, res, next) => {
     }
 
     await User.updateOne({ _id }, {
-        $set: { role: `premium` }
+        $set: { role: `premiumPro` }
     })
     res.status(200).json({
-        message: `user upgraded to premium`,
+        message: `user upgraded to Pro`,
+    })
+}
+exports.upgradeToPremiumExpert = async (req, res, next) => {
+    const { _id } = req.payload
+
+    const { User } = req.db
+    const found = await User.findOne({ _id })
+    if (!found) {
+        const err = new Error(`user not found`)
+        err.code = 404
+        return next(err)
+    }
+
+    if (found.role !== `free` || found.role !== `premiumPro`) {
+        const err = new Error(`only for free and premiumPro account`)
+        err.code = 400
+        return next(err)
+    }
+
+    await User.updateOne({ _id }, {
+        $set: { role: `premiumExpert` }
+    })
+    res.status(200).json({
+        message: `user upgraded to Expert`,
     })
 }
 
