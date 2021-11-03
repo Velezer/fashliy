@@ -1,6 +1,6 @@
 openapi: 3.0.2
 
-info: 
+info:
   title: Fashliy API
   version: 1.0.0
   contact:
@@ -14,14 +14,12 @@ externalDocs:
 servers:
   - url: https://fashliy.herokuapp.com/
 
-
 components:
   securitySchemes:
     jwt_token:
       type: http
-      scheme: 'Bearer'
+      scheme: "Bearer"
   schemas:
-
     loginSuccess:
       type: object
       properties:
@@ -32,7 +30,6 @@ components:
           properties:
             token:
               type: string
-
 
     basicMessage:
       type: object
@@ -54,8 +51,20 @@ components:
                 type: string
               location:
                 type: string
-        
-
+    userLogin:
+      type: object
+      properties:
+        email: 
+          type: string
+        password:
+          type: string
+    userRegister:
+      type: object
+      properties:
+        email: 
+          type: string
+        password:
+          type: string
 paths:
   /:
     get:
@@ -67,11 +76,10 @@ paths:
         200:
           description: OK
 
-
   /api/users:
     get:
-      summary: get all consultants
-      description: get all consultants
+      summary: get all users
+      description: admin only
       tags:
         - users
       security:
@@ -79,20 +87,9 @@ paths:
       responses:
         200:
           description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/getAllConsultants'
-              example:
-                message: success
-                data: 
-                  - _id: 6173d2e7365b7f5cefd2017d,
-                    name: secretConsultant,
-                    role: consultant,
-                    gender: female,
-                    __v: 0
+
     delete:
-      summary: delete consultant
+      summary: delete user
       description: delete based on jwt_token
       tags:
         - consultants
@@ -104,77 +101,61 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/basicMessage'
-                  
-  
-  /api/consultants/login:
+                $ref: "#/components/schemas/basicMessage"
+
+  /api/users/login:
     post:
-      summary: login as a consultants
+      summary: login as a user
       description: for getting jwt token
       tags:
-        - consultants
+        - users
       requestBody:
         required: true
-        description: consultant data
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/consultantLogin'
+              $ref: "#/components/schemas/userLogin"
             example:
               name: name
               password: password
-                
+
       responses:
         200:
           description: login success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/consultantLogin'
 
-        400:
-          description: Validation failed
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/validationError'
-                
-  /api/consultants/register:
+  /api/users/register:
     post:
-      summary: register as a consultants
-      description: register as a consultants
       tags:
-        - consultants
+        - users
       requestBody:
         required: true
         description: consultant data
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/consultantRegister'
+              $ref: "#/components/schemas/userRegister"
             example:
               name: name
               password: password
               role: consultant
               gender: male
-                
+
       responses:
         201:
           description: consultant created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/basicMessage'
+                $ref: "#/components/schemas/basicMessage"
         409:
           description: consultant already exist
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/basicMessage'
+                $ref: "#/components/schemas/basicMessage"
         400:
           description: Validation failed
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/validationError'
-
+                $ref: "#/components/schemas/validationError"
