@@ -57,6 +57,7 @@ exports.login = async (req, res, next) => {
 
     const bcrypt = req.bcrypt
     const match = await bcrypt.compare(password, found.password)
+    delete found.password
 
     if (!match) {
         const err = new Error(`password doesn't match`)
@@ -65,7 +66,7 @@ exports.login = async (req, res, next) => {
     }
 
     const jwt = req.jwt
-    const token = await jwt.sign({ _id: found._id, username: found.username, role: found.role }, process.env.JWT_KEY, {
+    const token = await jwt.sign(found, process.env.JWT_KEY, {
         expiresIn: `7d`
     })
 
