@@ -164,6 +164,7 @@ exports.upgradeToPremiumExpert = async (req, res, next) => {
 }
 
 exports.info = async (req, res, next) => {
+    console.log(req.payload)
     const { _id } = req.payload
 
     const { User } = req.db
