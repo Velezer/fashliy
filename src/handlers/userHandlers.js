@@ -16,9 +16,9 @@ exports.register = async (req, res, next) => {
 
     let newUser = new User({ username, email, password: hashed, role: 'free', birthDate, address, instance, phoneNumber })
 
-    newUser = await newUser.save()
+    newUser = await newUser.save().catch(err => next(err))
     res.status(201).json({
-        message: `User ${newUser.username} created`
+        message: `User ${username} created`
     })
 }
 
@@ -38,7 +38,7 @@ exports.createAdmin = async (req, res, next) => {
 
     let newUser = new User({ username, email, password: hashed, role: 'admin', birthDate, address, instance, phoneNumber })
 
-    newUser = await newUser.save()
+    newUser = await newUser.save().catch(err => next(err))
     res.status(201).json({
         message: `User ${newUser.name} created`
     })
