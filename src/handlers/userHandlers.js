@@ -162,4 +162,21 @@ exports.upgradeToPremiumExpert = async (req, res, next) => {
     })
 }
 
+exports.info = async (req, res, next) => {
+    const { _id } = req.payload
+
+    const { User } = req.db
+    const found = await User.findOne({ _id })
+    if (!found) {
+        const err = new Error(`user not found`)
+        err.code = 404
+        return next(err)
+    }
+
+    res.status(200).json({
+        message: `user upgraded to Expert`,
+        data: found
+    })
+}
+
 
