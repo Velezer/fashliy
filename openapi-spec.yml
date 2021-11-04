@@ -54,29 +54,29 @@ components:
     userLogin:
       type: object
       properties:
-        email: 
+        email:
           type: string
         password:
           type: string
     userRegister:
       type: object
       properties:
-        username: 
+        username:
           type: string
-        email: 
+        email:
           type: string
         password:
           type: string
-        birthDate: 
-            type: string
-            format: date
+        birthDate:
+          type: string
+          format: date
         address:
-            type: string
-        instance: 
-            type: string
-        phoneNumber: 
-            type: string
-        
+          type: string
+        instance:
+          type: string
+        phoneNumber:
+          type: string
+
 paths:
   /:
     get:
@@ -128,6 +128,21 @@ paths:
         200:
           description: login success
 
+  /api/users/register:
+    summary: register
+    post:
+      tags:
+        - users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/userRegister"
+
+      responses:
+        201:
+          description: created
   /api/users/admin:
     post:
       summary: create admin
@@ -145,22 +160,6 @@ paths:
         200:
           description: upgraded to premium
 
-  /api/users/register:
-    summary: register
-    post:
-      tags:
-        - users
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/userRegister"
-
-      responses:
-        201:
-          description: created
-
   /api/users/upgradePro:
     post:
       tags:
@@ -170,7 +169,7 @@ paths:
       responses:
         200:
           description: upgraded to premiumPro
-          
+
   /api/users/upgradeExpert:
     post:
       tags:
@@ -189,5 +188,3 @@ paths:
       responses:
         200:
           description: user info
-  
-
