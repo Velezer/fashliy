@@ -67,6 +67,16 @@ components:
           type: string
         password:
           type: string
+        birthDate: 
+            type: string
+            format: date
+        address:
+            type: string
+        instance: 
+            type: string
+        phoneNumber: 
+            type: string
+        
 paths:
   /:
     get:
