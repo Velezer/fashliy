@@ -10,7 +10,7 @@ const Lesson = mongoose.model('Lesson', new Schema(
         },
         category: {
             type: String,
-            enum: ['Bahasa Arab', 'Aqidah', 'Fiqih'],
+            enum: ['Tafsir', 'Hadits', 'Fiqih'],
             required: [true, 'category required'],
         },
         description: {
