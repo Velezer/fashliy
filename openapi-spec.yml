@@ -171,13 +171,13 @@ paths:
         200:
           description: upgraded to premiumExpert
   /api/users/info:
-    ge:
+    get:
       tags:
         - users
       security:
         - jwt_token: []
       responses:
         200:
-          description: upgraded to premiumExpert
+          description: user info
   
 

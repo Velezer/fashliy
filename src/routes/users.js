@@ -11,6 +11,7 @@ router.post('/upgradePro', auth, userHandlers.upgradeToPremiumPro)
 router.post('/upgradeExpert', auth, userHandlers.upgradeToPremiumExpert)
 
 router.delete('/', auth, userHandlers.deleteUser)
+router.get('/info', auth, userHandlers.info)
 
 // admin only
 router.get('/', auth, userHandlers.getUsers)
