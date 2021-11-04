@@ -14,7 +14,7 @@ exports.register = async (req, res, next) => {
     const bcrypt = req.bcrypt
     const hashed = await bcrypt.hash(password, Number(process.env.SALT_OR_ROUNDS))
 
-    let newUser = new User({ username, password: hashed, role: 'free' })
+    let newUser = new User({ username, email, password: hashed, role: 'free' })
 
     newUser = await newUser.save()
     res.status(201).json({
@@ -36,7 +36,7 @@ exports.createAdmin = async (req, res, next) => {
     const bcrypt = req.bcrypt
     const hashed = await bcrypt.hash(password, Number(process.env.SALT_OR_ROUNDS))
 
-    let newUser = new User({ username, password: hashed, role: 'admin' })
+    let newUser = new User({ username, email, password: hashed, role: 'admin' })
 
     newUser = await newUser.save()
     res.status(201).json({
