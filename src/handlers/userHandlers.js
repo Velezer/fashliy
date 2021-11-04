@@ -163,7 +163,6 @@ exports.upgradeToPremiumExpert = async (req, res, next) => {
 }
 
 exports.info = async (req, res, next) => {
-    console.log(req.payload)
     const { _id } = req.payload
 
     const { User } = req.db
@@ -175,7 +174,7 @@ exports.info = async (req, res, next) => {
     }
 
     res.status(200).json({
-        message: `user upgraded to Expert`,
+        message: `user info`,
         data: found
     })
 }
