@@ -18,7 +18,7 @@ exports.register = async (req, res, next) => {
 
     newUser = await newUser.save().catch(err => next(err))
     res.status(201).json({
-        message: `User ${username} created`
+        message: `user ${username} created`
     })
 }
 
@@ -40,7 +40,7 @@ exports.createAdmin = async (req, res, next) => {
 
     newUser = await newUser.save().catch(err => next(err))
     res.status(201).json({
-        message: `User ${newUser.name} created`
+        message: `user ${username} created`
     })
 }
 

@@ -15,6 +15,6 @@ router.get('/info', auth, userHandlers.info)
 
 // admin only
 router.get('/', auth, userHandlers.getUsers)
-router.post('/admin', userHandlers.createAdmin)
+router.post('/admin', rules.regUser, userHandlers.createAdmin)
 
 module.exports = router
