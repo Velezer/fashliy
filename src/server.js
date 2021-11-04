@@ -2,10 +2,12 @@ const db = require("./db")
 const bcrypt = require("bcrypt")
 const jwt = require("jwt-then")
 
-const createServer = require("./ioServer")
+const app = require("./app")
 
 db.dbConnect()
-const server = createServer(db, bcrypt, jwt)
+const app = createApp(db, bcrypt, jwt)
+
+const httpServer = require("http").createServer(app)
 
 // eslint-disable-next-line no-undef
 const port = process.env.PORT || 3001
