@@ -25,6 +25,24 @@ const User = mongoose.model('User', new Schema(
             default: 'free',
             required: [true, 'role is required'],
         },
+        //NEW
+        birthDate: {
+            type: Schema.Types.Date,
+            required: [true, 'birthDate is required'],
+        },
+        address: {
+            type: String,
+            required: [true, 'address is required'],
+        },
+        instance: {
+            type: String,
+            required: [true, 'instance is required'],
+        },
+        phoneNumber: {
+            type: String,
+            required: [true, 'phoneNumber is required'],
+        },
+
 
     },
 ))
