@@ -4,10 +4,15 @@ const Schema = mongoose.Schema
 
 const User = mongoose.model('User', new Schema(
     {
-        username: {
+        name: {
             type: String,
             required: [true, 'name is required'],
             unique: [true, 'name is aready exist'],
+        },
+        username: {
+            type: String,
+            required: [true, 'username is required'],
+            unique: [true, 'username is aready exist'],
         },
         email: {
             type: String,

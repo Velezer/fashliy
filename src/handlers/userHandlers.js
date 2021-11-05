@@ -2,7 +2,7 @@ require("dotenv").config()
 
 exports.register = async (req, res, next) => {
 
-    const { username, email, password, birthDate, address, instance, phoneNumber } = req.body
+    const { name, username, email, password, birthDate, address, instance, phoneNumber } = req.body
 
     const { User } = req.db
     const found = await User.findOne({ email })
@@ -14,7 +14,7 @@ exports.register = async (req, res, next) => {
     const bcrypt = req.bcrypt
     const hashed = await bcrypt.hash(password, Number(process.env.SALT_OR_ROUNDS))
 
-    let newUser = new User({ username, email, password: hashed, role: 'free', birthDate, address, instance, phoneNumber })
+    let newUser = new User({ name, username, email, password: hashed, role: 'free', birthDate, address, instance, phoneNumber })
 
     newUser = await newUser.save().catch(err => next(err))
     res.status(201).json({
@@ -24,7 +24,7 @@ exports.register = async (req, res, next) => {
 
 exports.createAdmin = async (req, res, next) => {
 
-    const { username, email, password, birthDate, address, instance, phoneNumber } = req.body
+    const { name, username, email, password, birthDate, address, instance, phoneNumber } = req.body
 
     const { User } = req.db
     const found = await User.findOne({ email })
@@ -36,7 +36,7 @@ exports.createAdmin = async (req, res, next) => {
     const bcrypt = req.bcrypt
     const hashed = await bcrypt.hash(password, Number(process.env.SALT_OR_ROUNDS))
 
-    let newUser = new User({ username, email, password: hashed, role: 'admin', birthDate, address, instance, phoneNumber })
+    let newUser = new User({ name, username, email, password: hashed, role: 'admin', birthDate, address, instance, phoneNumber })
 
     newUser = await newUser.save().catch(err => next(err))
     res.status(201).json({

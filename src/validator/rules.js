@@ -11,6 +11,7 @@ const validate = (req, res, next) => {
 }
 
 exports.regUser = [
+    body(`name`, `name is empty`).notEmpty(),
     body(`username`, `username is empty`).notEmpty(),
     body(`email`, `email is not valid`).isEmail(),
     body(`password`, `password is empty`).notEmpty(),
