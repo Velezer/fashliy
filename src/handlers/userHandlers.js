@@ -17,9 +17,12 @@ exports.register = async (req, res, next) => {
     let newUser = new User({ name, username, email, password: hashed, role: 'free', birthDate, address, instance, phoneNumber })
 
     newUser = await newUser.save().catch(err => next(err))
-    res.status(201).json({
-        message: `user ${username} created`
-    })
+        .then(() => {
+            res.status(201).json({
+                message: `user ${username} created`
+            })
+        })
+
 }
 
 exports.createAdmin = async (req, res, next) => {
@@ -39,9 +42,11 @@ exports.createAdmin = async (req, res, next) => {
     let newUser = new User({ name, username, email, password: hashed, role: 'admin', birthDate, address, instance, phoneNumber })
 
     newUser = await newUser.save().catch(err => next(err))
-    res.status(201).json({
-        message: `user ${username} created`
-    })
+        .then(() => {
+            res.status(201).json({
+                message: `user ${username} created`
+            })
+        })
 }
 
 exports.login = async (req, res, next) => {
@@ -107,10 +112,11 @@ exports.deleteUser = async (req, res, next) => {
         return next(err)
     }
     await User.deleteOne({ _id }).catch(err => next(err))
-
-    res.status(200).json({
-        message: `user deleted`,
-    })
+        .then(() => {
+            res.status(200).json({
+                message: `user deleted`,
+            })
+        })
 }
 
 exports.upgradeToPremiumPro = async (req, res, next) => {
