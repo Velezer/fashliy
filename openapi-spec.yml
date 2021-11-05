@@ -158,7 +158,7 @@ paths:
               $ref: "#/components/schemas/userRegister"
       responses:
         200:
-          description: upgraded to premium
+          description: created
 
   /api/users/upgradePro:
     post:
