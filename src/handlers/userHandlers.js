@@ -154,7 +154,7 @@ exports.upgradeToPremiumExpert = async (req, res, next) => {
         return next(err)
     }
 
-    if (found.role !== `free` || found.role !== `premiumPro`) {
+    if (found.role !== `free` && found.role !== `premiumPro`) {
         const err = new Error(`only for free and premiumPro account`)
         err.code = 400
         return next(err)
