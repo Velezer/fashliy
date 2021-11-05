@@ -81,7 +81,7 @@ exports.login = async (req, res, next) => {
 }
 
 // admin only
-exports.getUsers = async (req, res) => {
+exports.getUsers = async (req, res, next) => {
     const { _id } = req.payload
 
     const { User } = req.db
